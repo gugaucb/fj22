@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+<title>.:Argentum-Web:. Home</title>
+</h:head>
+<h:body>
+ 
+	<h:form>
+	<p:poll interval="30" update="grafico" />  
+	<p:panel id="painelGrafico" header="Negociações" footer="Argntum Web" >
+		<p:lineChart id="grafico" value="#{applicationResourcesBean.modeloGrafico}" legendPosition="e" title="PETR4" zoom="true" widgetVar="chart" minY="15.85" maxY="16.15">
+		
+		</p:lineChart>
+		<p:commandButton type="button" value="Reset" icon="ui-icon-cancel" onclick="PF('chart').resetZoom()"/>
+	</p:panel>
+	
+	
+	<p:dataTable id="valores" value="#{applicationResourcesBean.negociacoes.fila}" 
+	var="n" paginator="true" rows="10" paginatorPosition="bottom"
+	 sortBy="#{n.data}" sortOrder="descending">
+		<p:column sortBy="#{n.data}"  headerText="Data">
+			<h:outputText value="#{n.data.time}">
+                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"/>
+             </h:outputText>
+			
+		</p:column>
+		
+		<p:column sortBy="#{n.preco}"  headerText="Preço">
+			
+			<h:outputText value="#{n.preco}">
+                 <f:convertNumber type="currency"/>
+             </h:outputText>
+			
+		</p:column>
+		
+		<p:column headerText="Quantidade">
+			#{n.quantidade}
+		</p:column>
+	</p:dataTable>
+	</h:form>
+	
+</h:body>
+</html>
